@@ -1,14 +1,17 @@
 #include <iostream>
+#include <memory>
+
 #include "lexer.hxx"
 #include "token.hxx"
 
 int main() {
-  xpp::Lexer lexer{"a ; b ;//simple comment\n /* block comment */\n123 + - * / % = < > <= != >= == () [] {} , . \"string\"  "};
+  std::string program = R"(a ; b ;//simple comment\n /* block comment */\n123 + - * / % = < > <= != >= == () [] {} , . "string" asd)";
+  xpp::Lexer lexer{program};
 
-  xpp::Token* token;
+  std::unique_ptr<xpp::Token> token;
 
   do {
-    token = lexer.next();
+    token.reset(lexer.next());
 
     std::cout << token->kind();
 

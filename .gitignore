@@ -1,1 +1,2 @@
-cmake-build-debug
+# any build folder shall be removed
+*build*
