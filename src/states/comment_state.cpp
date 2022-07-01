@@ -1,4 +1,5 @@
 #include "comment_state.hxx"
+#include "states.hxx"
 
 namespace xpp::states {
 
@@ -6,10 +7,14 @@ namespace xpp::states {
     auto lexer = _machine->base();
     auto currentChar = lexer->peek();
 
-    if (currentChar == '\n' || currentChar == '*') {
-      machine()->change_state(make_state<EndCommentState>());
-    } else {
-      lexer->consume();
+    switch (currentChar) {
+      case '\n':
+      case '*':
+        machine()->change_state(make_state<EndCommentState>());
+        break;
+      default:
+        lexer->consume();
+        break;
     }
 
     return BaseState::react();
@@ -19,13 +24,14 @@ namespace xpp::states {
     auto lexer = _machine->base();
     auto currentChar = lexer->get();
 
-    if (currentChar == '\n' || currentChar == '/') {
-      return new Token(Token::Kind::Comment);
-    } else if (currentChar == '*') {
-     lexer->consume();
-    }
-    else {
-      machine()->change_state(make_state<CommentState>());
+    switch (currentChar) {
+      case '\n':
+        lexer->next_line();
+      case '/':
+        machine()->change_state(make_state<InitialState>());
+        break;
+      default:
+        break;
     }
 
     return BaseState::react();

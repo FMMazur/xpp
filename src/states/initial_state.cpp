@@ -57,6 +57,8 @@ namespace xpp::states {
     }
 
     if (std::isspace(currentChar)) {
+      if (currentChar == '\n') lexer->next_line();
+
       lexer->consume();
       machine()->change_state(make_state<SpaceState>());
     }

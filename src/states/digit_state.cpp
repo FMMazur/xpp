@@ -9,7 +9,7 @@ namespace xpp::states {
     if (std::isdigit(currentChar)) {
       lexer->consume();
     } else {
-      return new Token(Token::Kind::Integer);
+      return new Token(Token::Kind::IntegerLiteral);
     }
 
     return BaseState::react();

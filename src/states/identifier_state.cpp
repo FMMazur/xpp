@@ -10,8 +10,16 @@ namespace xpp::states {
       lexeme.push_back(currentChar);
       lexer->consume();
     } else {
-      // TODO: check if in keyword table
-      return new Token(Token::Kind::Identifier, lexeme);
+      auto table = lexer->table();
+
+      if (table) {
+        auto existIdentifier = table->get(lexeme);
+
+        if (existIdentifier)
+          return existIdentifier->token;
+      }
+
+      return new Token(Token::Kind::Identifier, lexeme);;
     }
 
     return BaseState::react();

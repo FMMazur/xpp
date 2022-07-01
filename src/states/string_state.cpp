@@ -7,7 +7,7 @@ namespace xpp::states {
     auto currentChar = lexer->get();
 
     if (currentChar == '"') {
-      return new Token(Token::Kind::String);
+      return new Token(Token::Kind::StringLiteral);
     }
 
     return BaseState::react();

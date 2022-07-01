@@ -5,7 +5,7 @@
 #include "token.hxx"
 
 int main() {
-  std::string program = R"(a ; b ;//simple comment\n /* block comment */\n123 + - * / % = < > <= != >= == () [] {} , . "string" asd)";
+  std::string program = "(a ; b ;//simple comment\n /* block comment */\n123 + - * / % = < > <= != >= == () [] {} , . \"string\" asd)";
   xpp::Lexer lexer{program};
 
   std::unique_ptr<xpp::Token> token;

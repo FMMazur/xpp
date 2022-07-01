@@ -1,0 +1,63 @@
+class Animal {
+    constructor(){}
+    void init() {
+        int a;
+        a = -1;
+    }
+}
+
+class Pessoa extends Animal {
+    int idade;
+    string nome;
+
+    Pessoa pai, mae;
+    Pessoa[] parentes;
+
+    string[] hobbies;
+
+    constructor() {}
+    constructor(string nome){}
+    constructor(string nome, int idade) {
+        this.nome = nome;
+        this.idade = idade;
+    }
+
+    string[] hobbies() {
+        return hobbies;
+    }
+
+    string[] parentes() {
+        return mae.nome + (" " + pai.nome);
+    }
+
+    void init() {
+        int a;
+        a = -1;
+    }
+
+    void ifs() {
+        if (1) {
+            print "turbo";
+            print +1;
+            print 1 < 2;
+            print 1 != 3;
+            print 1 * 5;
+            print + "";
+        }
+
+        if (1) {;} else {;}
+    }
+
+    test fors() {
+        //for(;;){;;}
+        //for(a = 0;;){;;}
+        //for(;a;){;;}
+        //for(;;a = 3){;}
+    }
+
+    test news() {
+        a[2] = t;
+        a = Test[1];
+        a = new Test();
+    }
+}

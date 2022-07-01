@@ -29,6 +29,6 @@ namespace xpp::fsm {
 
 }
 
-#include "fsm.inl"
+#include "fsm.h"
 
 #endif //XPP_MACHINE_HXX

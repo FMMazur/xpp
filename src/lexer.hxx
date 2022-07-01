@@ -6,16 +6,19 @@
 #include <cassert>
 #include "token.hxx"
 #include "fsm/fsm.hxx"
+#include "table/symbol_table.hxx"
 
 namespace xpp {
 
-  class Lexer : fsm::FSM<Lexer, std::optional<Token*>> {
+  class Lexer : fsm::FSM<Lexer, std::optional<Token *>> {
   public:
     Lexer() = delete;
+
     explicit Lexer(std::string_view program);
+
     virtual ~Lexer();
 
-    Token* next();
+    Token *next();
 
     [[nodiscard]] inline std::size_t pos() const {
       return _pos;
@@ -40,17 +43,26 @@ namespace xpp {
     }
 
     inline void consume() { _pos++; }
+
     inline void undo() { _pos--; }
 
-    friend struct fsm::State<Lexer, std::optional<Token*>>;
+    inline void next_line() { _line++; }
+    inline std::size_t line() { return _line; }
+
+    inline SymbolTable *table() { return _symbolTable; };
+    inline void table(SymbolTable * symbolTable) { _symbolTable = symbolTable; };
+
+    friend struct fsm::State<Lexer, std::optional<Token *>>;
 
   protected:
-     void initial_state() override;
+    void initial_state() override;
 
   private:
     std::string_view _program;
     std::size_t _pos;
     std::size_t _line;
+
+    SymbolTable *_symbolTable{nullptr};
   };
 
 }

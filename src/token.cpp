@@ -6,8 +6,8 @@ namespace xpp {
 
   Token::Token(Token::Kind type,
                std::optional<std::variant<std::string_view, Attribute>> attr)
-               : _kind{type},
-               _attr{attr} {}
+      : _kind{type},
+        _attr{attr} {}
 
   Token::Kind Token::kind() noexcept {
     return _kind;
@@ -32,8 +32,11 @@ namespace xpp {
   }
 
   bool Token::has_lexeme() const noexcept {
-    if (Token::is_not(Kind::Identifier))
-      if (!_attr.has_value()) return false;
+    if (!Token::is_one_of(Kind::Identifier, Kind::Class, Kind::Constructor, Kind::Extends, Kind::Break, Kind::Print,
+                         Kind::Read, Kind::Return, Kind::Super, Kind::If, Kind::Else, Kind::For, Kind::New))
+      return false;
+
+    if (!_attr.has_value()) return false;
 
     auto variant{_attr.value()};
 
@@ -57,8 +60,6 @@ namespace xpp {
   }
 
   bool Token::is_op() {
-    assert(_kind == Kind::Operator);
-
     if (!_attr.has_value()) return false;
 
     auto variant{_attr.value()};
@@ -71,8 +72,6 @@ namespace xpp {
   }
 
   bool Token::is_separator() {
-    assert(_kind == Kind::Separator);
-
     if (!_attr.has_value()) return false;
 
     auto variant{_attr.value()};

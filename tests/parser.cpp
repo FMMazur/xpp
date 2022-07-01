@@ -3,6 +3,8 @@
 #include <fstream>
 #include <sstream>
 
+#include "lexer.hxx"
+#include "token.hxx"
 #include "parser.hxx"
 
 int main(int argc, char** argv) {

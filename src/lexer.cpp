@@ -29,6 +29,7 @@ namespace xpp {
 
   Lexer::~Lexer() {
     delete state();
+
     _pos = 0;
     _line = 0;
     _program = "";
