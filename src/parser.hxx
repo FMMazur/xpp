@@ -22,12 +22,14 @@ namespace xpp {
     void classList();
     void classDecl();
     void classBody();
+    void classContent();
 
     void varDeclListOpt();
     void varDeclList();
     void varDecl();
     void varDeclNoAmbiguity();
     void varDeclOpt();
+    void declListOpt();
 
     void constructDeclListOpt();
     void constructDeclList();

@@ -186,11 +186,36 @@ namespace xpp {
   void Parser::classBody() {
     match(Token::SeparatorAttribute::LeftBrace);
 
-    varDeclListOpt();
-    constructDeclListOpt();
-    methodDeclListOpt();
+    classContent();
+
+    //varDeclListOpt();
+    //constructDeclListOpt();
+    //methodDeclListOpt();
 
     match(Token::SeparatorAttribute::RightBrace);
+  }
+
+  void Parser::classContent() {
+    if (_ltoken->is(Token::Kind::Constructor)) {
+      constructDeclListOpt();
+      methodDeclListOpt();
+    }
+
+    if (_ltoken->is(Token::Kind::Identifier)) {
+      match(Token::Kind::Identifier);
+
+      if (_ltoken->separator() == Token::SeparatorAttribute::LeftBracket) {
+        advance();
+
+        match(Token::SeparatorAttribute::RightBracket);
+      }
+
+      if (_ltoken->is(Token::Kind::Identifier)) {
+        match(Token::Kind::Identifier);
+
+        declListOpt();
+      }
+    }
   }
 
   void Parser::varDeclListOpt() {
@@ -230,6 +255,22 @@ namespace xpp {
       advance();
 
       match(Token::Kind::Identifier);
+    }
+  }
+
+  void Parser::declListOpt() {
+    if (_ltoken->separator() == Token::SeparatorAttribute::Comma || _ltoken->separator() == Token::SeparatorAttribute::Semicolon) {
+      varDeclOpt();
+
+      match(Token::SeparatorAttribute::Semicolon);
+
+      classContent();
+    }
+
+    if (_ltoken->separator() == Token::SeparatorAttribute::LeftParen) {
+      methodBody();
+
+      methodDeclListOpt();
     }
   }
 

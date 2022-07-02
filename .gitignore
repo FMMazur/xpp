@@ -1,2 +1,4 @@
 # any build folder shall be removed
 *build*
+
+.vscode
